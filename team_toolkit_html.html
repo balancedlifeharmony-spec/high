@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>High-Performing Teams Toolkit</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            background-color: #ffffff;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+        
+        .header {
+            margin-bottom: 32px;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background-color: #dbeafe;
+            color: #1d4ed8;
+            font-size: 0.875rem;
+            border-radius: 9999px;
+            margin-bottom: 16px;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .nav-tab {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border: none;
+            background: none;
+            color: #6b7280;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        
+        .nav-tab:hover {
+            color: #374151;
+        }
+        
+        .nav-tab.active {
+            color: #2563eb;
+            border-bottom-color: #2563eb;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .card-header {
+            background: #f8fafc;
+            margin: -24px -24px 24px -24px;
+            padding: 16px 24px;
+            border-radius: 8px 8px 0 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .card-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+        
+        .card-header p {
+            color: #6b7280;
+        }
+        
+        .assessment-layer {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+        
+        .layer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .layer-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1f2937;
+        }
+        
+        .layer-score {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .score-excellent { color: #059669; }
+        .score-good { color: #d97706; }
+        .score-poor { color: #dc2626; }
+        
+        .question-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            gap: 16px;
+        }
+        
+        .question-text {
+            flex: 1;
+            color: #374151;
+        }
+        
+        .rating-buttons {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .rating-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            background-color: #e5e7eb;
+            color: #6b7280;
+        }
+        
+        .rating-btn:hover {
+            background-color: #d1d5db;
+        }
+        
+        .rating-btn.selected {
+            background-color: #2563eb;
+            color: white;
+        }
+        
+        .playbook-item {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+            transition: all 0.2s;
+        }
+        
+        .playbook-item.completed {
+            background-color: #f0fdf4;
+            border-color: #bbf7d0;
+        }
+        
+        .playbook-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+        
+        .check-btn {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid #d1d5db;
+            background: white;
+            cursor: pointer;
+            margin-top: 4px;
+            position: relative;
+        }
+        
+        .check-btn.checked {
+            background: #10b981;
+            border-color: #10b981;
+        }
+        
+        .check-btn.checked::after {
+            content: '✓';
+            color: white;
+            font-size: 14px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .playbook-content {
+            flex: 1;
+        }
+        
+        .playbook-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .week-badge {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #6b7280;
+        }
+        
+        .layer-badge {
+            padding: 2px 8px;
+            font-size: 0.75rem;
+            border-radius: 9999px;
+        }
+        
+        .badge-safety { background: #dbeafe; color: #1d4ed8; }
+        .badge-conflict { background: #fef3c7; color: #d97706; }
+        .badge-commitment { background: #ede9fe; color: #7c3aed; }
+        .badge-accountability { background: #fed7aa; color: #ea580c; }
+        .badge-results { background: #d1fae5; color: #059669; }
+        .badge-system { background: #f3f4f6; color: #374151; }
+        
+        .playbook-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #1f2937;
+        }
+        
+        .playbook-desc {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+        
+        .completed .playbook-title {
+            color: #166534;
+        }
+        
+        .completed .playbook-desc {
+            color: #15803d;
+        }
+        
+        .progress-card {
+            background: #f0f9ff;
+            border: 1px solid #0ea5e9;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 24px;
+        }
+        
+        .progress-title {
+            font-weight: 600;
+            color: #0c4a6e;
+            margin-bottom: 8px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #bae6fd;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #0284c7;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        .template-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .template-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .template-title {
+            font-weight: 600;
+            color: #1f2937;
+        }
+        
+        .copy-btn {
+            padding: 4px 12px;
+            background: white;
+            color: #6b7280;
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .copy-btn:hover {
+            background: #f9fafb;
+        }
+        
+        .template-content {
+            background: #f9fafb;
+            padding: 16px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            color: #374151;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            gap: 24px;
+        }
+        
+        @media (min-width: 768px) {
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .metric-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 16px;
+        }
+        
+        .metric-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 12px;
+        }
+        
+        .metric-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .metric-list li {
+            font-size: 0.875rem;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+        
+        .alert {
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+        }
+        
+        .alert-green {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #166534;
+        }
+        
+        .alert-red {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #991b1b;
+        }
+        
+        .alert h3 {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>High-Performing Teams Toolkit</h1>
+            <div class="badge">Safety → Conflict → Commit → Account → Results</div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" data-tab="assessment">
+                <span>🎯</span> Team Assessment
+            </button>
+            <button class="nav-tab" data-tab="playbook">
+                <span>📅</span> 90-Day Playbook
+            </button>
+            <button class="nav-tab" data-tab="templates">
+                <span>📋</span> Templates
+            </button>
+            <button class="nav-tab" data-tab="metrics">
+                <span>⭐</span> Metrics Dashboard
+            </button>
+        </div>
+
+        <!-- Assessment Tab -->
+        <div id="assessment" class="tab-content active">
+            <div class="card">
+                <div class="card-header" style="background: #dbeafe;">
+                    <h2>Team Performance Assessment</h2>
+                    <p>Rate each statement from 1 (Never) to 5 (Always). This will help identify which layer needs attention first.</p>
+                </div>
+                <div id="assessment-layers"></div>
+                <div class="alert alert-green">
+                    <h3>Next Steps</h3>
+                    <p>Focus on your lowest-scoring layer first. The framework builds from bottom to top - fix the foundation before working on higher layers.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Playbook Tab -->
+        <div id="playbook" class="tab-content">
+            <div class="card">
+                <div class="card-header" style="background: #f0fdf4;">
+                    <h2>90-Day Implementation Playbook</h2>
+                    <p>Implement one move per week. Check off each as you complete it. Each move builds on the previous ones.</p>
+                </div>
+                <div id="playbook-items"></div>
+                <div class="progress-card">
+                    <div class="progress-title" id="progress-text">Progress: 0/10 Complete</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Templates Tab -->
+        <div id="templates" class="tab-content">
+            <div class="card">
+                <div class="card-header" style="background: #f3e8ff;">
+                    <h2>Ready-to-Use Templates</h2>
+                    <p>Copy and customize these templates for your team's implementation.</p>
+                </div>
+                <div id="template-cards"></div>
+            </div>
+        </div>
+
+        <!-- Metrics Tab -->
+        <div id="metrics" class="tab-content">
+            <div class="card">
+                <div class="card-header" style="background: #fef3c7;">
+                    <h2>What to Measure</h2>
+                    <p>Track these metrics to ensure you're building real high-performance habits, not just going through motions.</p>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-title">
+                            <span>👥</span> Foundation Metrics
+                        </div>
+                        <ul class="metric-list">
+                            <li>• <strong>Safety Pulse:</strong> Weekly 5-item survey average</li>
+                            <li>• <strong>Dissent Rate:</strong> % of meetings where someone disagrees</li>
+                            <li>• <strong>Conflict Mix:</strong> Task conflict ↑ / Relationship conflict → 0</li>
+                            <li>• <strong>Decision Clarity:</strong> % of work tied to logged decisions</li>
+                        </ul>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">
+                            <span>🎯</span> Performance Metrics
+                        </div>
+                        <ul class="metric-list">
+                            <li>• <strong>DoD Coverage:</strong> % of work with Definition of Done</li>
+                            <li>• <strong>Peer Review Rate:</strong> % of work reviewed before ship</li>
+                            <li>• <strong>On-time Delivery:</strong> % of commitments met by deadline</li>
+                            <li>• <strong>Outcome Trends:</strong> Progress on your 3-5 controllables</li>
+                        </ul>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">
+                            <span>💬</span> System Metrics
+                        </div>
+                        <ul class="metric-list">
+                            <li>• <strong>Handoff Success:</strong> % of clean handoffs (no missed context)</li>
+                            <li>• <strong>Cycle Time:</strong> Average time from start to done</li>
+                            <li>• <strong>Learning Rate:</strong> # of system improvements per month</li>
+                            <li>• <strong>Knowledge Distribution:</strong> % of critical knowledge with backup owner</li>
+                        </ul>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">
+                            <span>⚡</span> Leading Indicators
+                        </div>
+                        <ul class="metric-list">
+                            <li>• <strong>D-Note Speed:</strong> Hours to publish decision notes</li>
+                            <li>• <strong>Question Rate:</strong> # of clarifying questions per week</li>
+                            <li>• <strong>Help Requests:</strong> # of help requests per person per week</li>
+                            <li>• <strong>Experiment Rate:</strong> # of small tests run per month</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="alert alert-red">
+                    <h3>Red Flags to Watch</h3>
+                    <ul class="metric-list">
+                        <li>• Safety scores dropping or plateauing below 3.5</li>
+                        <li>• No dissent for 3+ consecutive meetings</li>
+                        <li>• More than 20% of work lacks clear ownership</li>
+                        <li>• Missed commitments without system changes</li>
+                        <li>• Handoffs failing more than 10% of the time</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data
+        const assessmentQuestions = {
+            safety: [
+                "Team members openly admit mistakes without fear",
+                "People regularly ask for help when needed",
+                "Dissenting opinions are welcomed and explored",
+                "Failed experiments are treated as learning opportunities",
+                "Everyone feels comfortable speaking up in meetings"
+            ],
+            conflict: [
+                "We debate ideas vigorously but respectfully",
+                "Team members can disagree without it becoming personal",
+                "We explore multiple options before deciding",
+                "Conflicts lead to better solutions, not damaged relationships",
+                "We allocate specific time for debate in our process"
+            ],
+            commitment: [
+                "Decisions are clearly documented with owners and timelines",
+                "Everyone understands what we're committing to and why",
+                "We follow through on commitments consistently",
+                "Unclear decisions are quickly clarified",
+                "All team members can explain our current priorities"
+            ],
+            accountability: [
+                "We have clear definitions of 'done' for our work",
+                "Team members hold each other accountable to standards",
+                "Ownership is never ambiguous (RACI/DRI is clear)",
+                "We review work before shipping (peer review)",
+                "Performance is tracked by individual, not just team"
+            ],
+            results: [
+                "We track 3-5 controllable outcomes consistently",
+                "Updates focus on progress toward goals, not just activities",
+                "We learn from outcomes and adjust our systems",
+                "Results drive our conversations, not politics or opinions",
+                "We celebrate wins and analyze misses systematically"
+            ]
+        };
+
+        const playbook90Days = [
+            { move: 1, layer: "Safety", title: "Safety Pulse + Learning Opener", description: "Implement weekly 5-item safety pulse survey and start every meeting with 'learned/mistake/help' 30-second round" },
+            { move: 2, layer: "Conflict", title: "Time-boxed Debate", description: "Structure debates: 10min options → 10min evidence/risks → 5min decision" },
+            { move: 3, layer: "Commitment", title: "Decision Closure Checklist", description: "Every decision must answer: What, Why, Owner, When, First milestone, Success metrics" },
+            { move: 4, layer: "Commitment", title: "D-Notes Publishing", description: "Publish one-page decision notes within 24h; each member states implications for their area" },
+            { move: 5, layer: "Accountability", title: "RACI/DRI Implementation", description: "Assign clear ownership (RACI/DRI) to all work streams and decisions" },
+            { move: 6, layer: "Accountability", title: "Definition of Done + Peer Review", description: "Create DoD for recurring work and implement peer review before shipping" },
+            { move: 7, layer: "Results", title: "Controllable Outcomes Scorecard", description: "Identify and track 3-5 controllable outcomes on public scorecard" },
+            { move: 8, layer: "Results", title: "Progress Narrative", description: "Structure all updates as: Goal → Progress → Blocker → Next Action" },
+            { move: 9, layer: "Cognition", title: "Expertise Map", description: "Create quarterly expertise map (Owner • Backup • Consulted)" },
+            { move: 10, layer: "System", title: "Monthly Reflexivity", description: "Lock in one system improvement based on learning each month" }
+        ];
+
+        const templates = {
+            dNote: `# Decision Note: [Title]
+**Date:** [Date]
+**Decision Owner:** [Name]
+**Participants:** [Names]
+
+## Decision
+**What:** [Clear statement of decision]
+**Why:** [Context and reasoning]
+
+## Options Considered
+1. [Option 1] - Pros/Cons
+2. [Option 2] - Pros/Cons
+
+## Implementation
+- **Owner:** [Name]
+- **Timeline:** [When]
+- **First Milestone:** [What by when]
+- **Success Metrics:** [How we'll know it worked]
+
+## Team Member Implications
+- **[Member 1]:** [Impact on their work]
+- **[Member 2]:** [Impact on their work]
+
+## Review Date
+[When we'll assess this decision]`,
+
+            safetyPulse: `# Weekly Safety Pulse (Rate 1-5)
+1. I feel comfortable admitting mistakes to the team
+2. I can ask for help without seeming incompetent  
+3. I can voice dissenting opinions safely
+4. Failed experiments are treated as learning
+5. I contribute meaningfully to team discussions
+
+**This week I learned:** [One thing]
+**This week I made a mistake:** [Be specific]
+**This week I need help with:** [Ask directly]`,
+
+            scorecard: `# Team Scorecard - Week of [Date]
+
+## Key Outcomes (Our 3-5 Controllables)
+| Metric | Owner | Target | Actual | Status | Next Action |
+|--------|-------|---------|--------|---------|-------------|
+| [Metric 1] | [Name] | [#] | [#] | 🟢/🟡/🔴 | [Action] |
+| [Metric 2] | [Name] | [#] | [#] | 🟢/🟡/🔴 | [Action] |
+| [Metric 3] | [Name] | [#] | [#] | 🟢/🟡/🔴 | [Action] |
+
+## Progress Updates
+**[Team Member]:** 
+- Goal: [What they're working toward]
+- Progress: [What got done]
+- Blocker: [What's in the way]
+- Next: [What's next]`,
+
+            meetingAgenda: `# Team Meeting Agenda - [Date]
+
+## Opening (5 min)
+- **Learning Round:** Each person shares one thing learned this week
+- **Safety Check:** Any mistakes to share? Help needed?
+
+## Debate Time (25 min)
+**Topic:** [Decision to make]
+- **Options (10 min):** What are our choices?
+- **Evidence/Risks (10 min):** Steel-man each option
+- **Decision (5 min):** Choose and assign D-Note owner
+
+## Scorecard Review (15 min)
+- Review 3-5 controllable outcomes
+- Identify blockers and next actions
+- Update ownership as needed
+
+## Accountability Check (10 min)
+- Peer review status
+- DoD compliance check
+- RACI/DRI clarifications
+
+## Closing (5 min)
+- Confirm D-Note will be published in 24h
+- Next meeting prep assignments`
+        };
+
+        // State
+        let assessmentData = JSON.parse(localStorage.getItem('assessmentData') || '{}');
+        let playbookProgress = JSON.parse(localStorage.getItem('playbookProgress') || '{}');
+
+        // Utils
+        function saveData() {
+            localStorage.setItem('assessmentData', JSON.stringify(assessmentData));
+            localStorage.setItem('playbookProgress', JSON.stringify(playbookProgress));
+        }
+
+        function calculateScore(questions) {
+            const scores = questions.map(q => assessmentData[q] || 0).filter(s => s > 0);
+            return scores.length ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) : '0.0';
+        }
+
+        function getScoreClass(score) {
+            if (score >= 4) return 'score-excellent';
+            if (score >= 3) return 'score-good';
+            return 'score-poor';
+        }
+
+        function getBadgeClass(layer) {
+            const classes = {
+                'Safety': 'badge-safety',
+                'Conflict': 'badge-conflict', 
+                'Commitment': 'badge-commitment',
+                'Accountability': 'badge-accountability',
+                'Results': 'badge-results',
+                'Cognition': 'badge-system',
+                'System': 'badge-system'
+            };
+            return classes[layer] || 'badge-system';
+        }
+
+        // Initialize
+        function initNavigation() {
+            const tabs = document.querySelectorAll('.nav-tab');
+            const contents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    contents.forEach(c => c.classList.remove('active'));
+                    
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+        }
+
+        function renderAssessment() {
+            const container = document.getElementById('assessment-layers');
+            const layerNames = {
+                safety: "1. Psychological Safety",
+                conflict: "2. Productive Conflict",
+                commitment: "3. Clear Commitment", 
+                accountability: "4. Peer Accountability",
+                results: "5. Real Results"
+            };
+
+            container.innerHTML = Object.entries(assessmentQuestions).map(([layer, questions]) => {
+                const score = calculateScore(questions);
+                const scoreClass = getScoreClass(parseFloat(score));
+
+                return `
+                    <div class="assessment-layer">
+                        <div class="layer-header">
+                            <div class="layer-title">${layerNames[layer]}</div>
+                            <div class="layer-score ${scoreClass}">${score}/5.0</div>
+                        </div>
+                        ${questions.map((question, idx) => `
+                            <div class="question-row">
+                                <div class="question-text">${question}</div>
+                                <div class="rating-buttons">
+                                    ${[1,2,3,4,5].map(rating => `
+                                        <button class="rating-btn ${assessmentData[question] === rating ? 'selected' : ''}"
+                                                onclick="setRating('${question}', ${rating})">
+                                            ${rating}
+                                        </button>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderPlaybook() {
+            const container = document.getElementById('playbook-items');
+            
+            container.innerHTML = playbook90Days.map(item => {
+                const isCompleted = playbookProgress[item.move];
+                return `
+                    <div class="playbook-item ${isCompleted ? 'completed' : ''}">
+                        <div class="playbook-header">
+                            <div class="check-btn ${isCompleted ? 'checked' : ''}" onclick="togglePlaybook(${item.move})"></div>
+                            <div class="playbook-content">
+                                <div class="playbook-meta">
+                                    <span class="week-badge">Week ${item.move}</span>
+                                    <span class="layer-badge ${getBadgeClass(item.layer)}">${item.layer}</span>
+                                </div>
+                                <div class="playbook-title">${item.title}</div>
+                                <div class="playbook-desc">${item.description}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            updateProgress();
+        }
+
+        function renderTemplates() {
+            const container = document.getElementById('template-cards');
+            const templateTitles = {
+                dNote: "Decision Note Template",
+                safetyPulse: "Weekly Safety Pulse",
+                scorecard: "Team Scorecard Template",
+                meetingAgenda: "Team Meeting Agenda"
+            };
+
+            container.innerHTML = Object.entries(templates).map(([key, template]) => `
+                <div class="template-card">
+                    <div class="template-header">
+                        <div class="template-title">${templateTitles[key]}</div>
+                        <button class="copy-btn" onclick="copyTemplate('${key}')">Copy</button>
+                    </div>
+                    <div class="template-content">${template}</div>
+                </div>
+            `).join('');
+        }
+
+        // Event Handlers
+        function setRating(question, rating) {
+            assessmentData[question] = rating;
+            saveData();
+            renderAssessment();
+        }
+
+        function togglePlaybook(move) {
+            playbookProgress[move] = !playbookProgress[move];
+            saveData();
+            renderPlaybook();
+        }
+
+        function updateProgress() {
+            const completed = Object.values(playbookProgress).filter(Boolean).length;
+            const total = playbook90Days.length;
+            const percentage = (completed / total) * 100;
+            
+            document.getElementById('progress-text').textContent = `Progress: ${completed}/${total} Complete`;
+            document.getElementById('progress-fill').style.width = `${percentage}%`;
+        }
+
+        async function copyTemplate(key) {
+            try {
+                await navigator.clipboard.writeText(templates[key]);
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = originalText, 2000);
+            } catch (err) {
+                console.error('Failed to copy: ', err);
+            }
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', () => {
+            initNavigation();
+            renderAssessment();
+            renderPlaybook();
+            renderTemplates();
+        });
+    </script>
+</body>
+</html>
